@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Automation Chatbot</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .chat-box {
+            text-align: left;
+            min-height: 400px;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+        }
+
+        .bot-message {
+            background: #459ca7;
+            color: white;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #34d399;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .chat-btn {
+            padding: 10px;
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .chat-btn:hover {
+            background: #e63946;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>🤖 Home Automation ChatBot</h1>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message"><strong>Bot:</strong> Welcome! How can I assist you?</div>
+        </div>
+        <div class="button-container">
+            <button class="chat-btn" onclick="showOptions('how-to-use')">📱 How to Use App</button>
+            <button class="chat-btn" onclick="showOptions('customer-support')">📞 Customer Support</button>
+            <button class="chat-btn" id="back-btn" onclick="goBack()" style="display:none;">🔙 Back</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        let previousContent = [];
+
+        function appendMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'bot' ? 'bot-message' : 'user-message');
+            messageDiv.innerHTML = `<strong>${sender === 'bot' ? 'Bot' : 'You'}:</strong> ${text}`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function showOptions(option) {
+            previousContent.push(chatBox.innerHTML);
+            document.getElementById('back-btn').style.display = 'block';
+            let content = '';
+            
+            if (option === 'how-to-use') {
+                appendMessage("Here’s how to use the app:", 'bot');
+                setTimeout(() => appendMessage("1️⃣ Step 1: Connect your smart home devices.", 'bot'), 1000);
+                setTimeout(() => appendMessage("2️⃣ Step 2: Open the app and go to settings.", 'bot'), 2000);
+                setTimeout(() => appendMessage("3️⃣ Step 3: Configure your preferences.", 'bot'), 3000);
+                setTimeout(() => appendMessage("4️⃣ Step 4: Start controlling your home!", 'bot'), 4000);
+            } else if (option === 'customer-support') {
+                appendMessage("Customer support options:", 'bot');
+                setTimeout(() => appendMessage("📧 Email: support@example.com", 'bot'), 1000);
+                setTimeout(() => appendMessage("📞 Call: +1234567890", 'bot'), 2000);
+            }
+        }
+
+        function goBack() {
+            if (previousContent.length > 0) {
+                chatBox.innerHTML = previousContent.pop();
+                if (previousContent.length === 0) {
+                    document.getElementById('back-btn').style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
